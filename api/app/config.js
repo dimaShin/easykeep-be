@@ -6,6 +6,7 @@ const dbConfig = require('./db/dbConfig.js');
 
 module.exports = function (env){
   return {
-    db: dbConfig(env)
+    db: dbConfig(env),
+    env: env.NODE_ENV
   }
 };

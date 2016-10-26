@@ -28,9 +28,14 @@ let actions = {
 
   verifySession: (req, res, next) => {
     let token = req.header('auth-token');
-    let verified = jwt.verify(token, secret);
-    console.log('verified: ', verified);
-    req.app.dbClient.db.Session.findById(verified.id)
+    let verified = token && jwt.verify(token, secret);
+    let app = req.app;
+
+    if (!verified) {
+      res.sendStatus(401);
+    }
+
+    app.dbClient.db.Session.findById(verified.id)
       .then(model => {
         if (!model) {
           res.send(401);
@@ -42,20 +47,14 @@ let actions = {
           return;
         }
 
-        if (process.env.NODE_ENV === 'development') {
-          req.app.user = {id: verified.userId};
-          next();
-        } else {
-          model.set('active', false);
-          model.save();
+        app.config.env === 'production' && model.set('active', false) && model.save();
 
-          actions.startSession(model.get('UserId'), req.app.dbClient.db.Session)
-            .then(model => {
-              res.header('auth-token', model.get('token'));
-              req.app.user = {id: model.get('userId')};
-              next();
-            });
-        }
+        actions.startSession(model.get('UserId'), req.app.dbClient.db.Session)
+          .then(model => {
+            res.header('auth-token', model.get('token'));
+            req.app.user = {id: model.get('userId')};
+            next();
+          });
 
       });
   },

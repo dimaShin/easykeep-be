@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=development nodemon app/server.js"
+    "start": "NODE_ENV=production node app/server.js",
+    "start:dev": "NODE_ENV=development nodemon app/server.js"
   },
   "dependencies": {
     "bcrypt": "^0.8.7",

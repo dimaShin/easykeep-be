@@ -9,6 +9,9 @@ const config = require('./config')(process.env);
 const logger = require('./logger');
 const router = require('./routes');
 const UserService = require('./services/user');
+const queryParser = require('./services/queryParser');
+
+app.config = config;
 
 const services = {
   auth: require('./services/auth'),
@@ -17,7 +20,7 @@ const services = {
 
 app.services = services;
 
-app.dbClient = new DbClient(config.db, app);
+app.dbClient = new DbClient(app);
 app.dbClient.sync({ loggin: console.log });
 
 app.use(bodyParser.urlencoded({ extended: false, force: true }));
@@ -26,7 +29,7 @@ app.use(bodyParser.json());
 logger(app);
 
 app.use('/api/*', services.auth.verifySession);
-
+app.get('/api/*', queryParser);
 app.use('/api/*', services.auth.populateUser);
 
 router(app);

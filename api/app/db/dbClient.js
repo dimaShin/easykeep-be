@@ -7,7 +7,7 @@ let Sequelize = require("sequelize");
 
 module.exports = class DbClient {
 
-  constructor(config, app) {
+  constructor(app) {
     this.models = [
       'User',
       'Account',
@@ -22,7 +22,7 @@ module.exports = class DbClient {
       'Measure',
       'Session'
     ];
-    this._sequelize = new Sequelize(...config);
+    this._sequelize = new Sequelize(...app.config.db);
     this.db = this.models
       .map(modelName => require(path.join(__dirname, 'models', modelName))(this._sequelize, Sequelize, app))
       .reduce((db, file) => DbClient.createModel(db, file), {});
