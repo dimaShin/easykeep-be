@@ -15,6 +15,9 @@ module.exports = function(sequelize, DataTypes, app) {
       set      : function(val) {
         this.setDataValue('password', app.services.auth.hash(val));
       }
+    },
+    defaultAccount: {
+      type: DataTypes.INTEGER
     }
   }, {
     classMethods: {

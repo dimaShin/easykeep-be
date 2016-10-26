@@ -15,7 +15,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     classMethods: {
       associate: function(models) {
-        Transaction.hasMany(models.Purchase)
+        Transaction.hasMany(models.Purchase);
+        Transaction.belongsTo(models.Account);
       }
     }
   });

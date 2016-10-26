@@ -8,9 +8,11 @@ const DbClient = require('./db/dbClient');
 const config = require('./config')(process.env);
 const logger = require('./logger');
 const router = require('./routes');
+const UserService = require('./services/user');
 
 const services = {
-  auth: require('./services/auth')
+  auth: require('./services/auth'),
+  user: new UserService(app)
 };
 
 app.services = services;
