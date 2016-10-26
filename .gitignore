@@ -1,0 +1,7 @@
+/pgdata/*
+!/pgdata/.gitkeep
+/api/node_modules
+/api/.git
+/client/node_modules
+/client/.git
+
