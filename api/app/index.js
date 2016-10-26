@@ -10,6 +10,8 @@ const logger = require('./logger');
 const router = require('./routes');
 const UserService = require('./services/user');
 const queryParser = require('./services/queryParser');
+const fs = require('fs');
+const path = require('path');
 
 app.config = config;
 

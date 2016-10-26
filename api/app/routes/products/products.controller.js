@@ -1,6 +1,3 @@
-/**
- * Created by iashindmytro on 10/26/16.
- */
 
 
 module.exports = [{
@@ -9,6 +6,9 @@ module.exports = [{
    * @api {get} /api/products Get products list
    *
    * @apiDescription This route for receiving products list.
+   * @apiName getProducts
+   *
+   * @apiGroup Products
    */
 
   url: '/api/products',

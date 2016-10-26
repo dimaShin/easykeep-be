@@ -60,7 +60,7 @@ module.exports = [{
    *
    * @apiDescription This route for registration
    * All params must be in request body.
-   * Account will be created and assigned as defaultAccount with this user created by this route.
+   * Account will be created and assigned as defaultAccount with created user.
    * Account name will be ${username} - default account.
    *
    * @apiName Sign Up
