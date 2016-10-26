@@ -3,6 +3,25 @@
  */
 
 module.exports = [{
+
+  /**
+   * @api {post} /signin Login into the system
+   *
+   * @apiDescription This route for loggin
+   * All params must be in request body.
+   *
+   *
+   * @apiName Sign In
+   * @apiGroup Auth
+   *
+   * @apiParam {sting} name User's name.
+   * @apiParam {string} password User's password.
+   *
+   * @apiSampleRequest 127.0.0.1:3000/signin
+   *
+   * @apiSuccess {string} token Token for access to the API.
+   */
+
   method: 'POST',
   url: '/signin',
   handlers: [(req, res)=> {
@@ -35,6 +54,25 @@ module.exports = [{
       })
     }],
   },
+
+  /**
+   * @api {post} /signip Register new user in the system
+   *
+   * @apiDescription This route for registration
+   * All params must be in request body.
+   *
+   *
+   * @apiName Sign Up
+   * @apiGroup Auth
+   *
+   * @apiParam {sting} name User's name.
+   * @apiParam {string} password User's password.
+   *
+   * @apiSampleRequest 127.0.0.1:3000/signup
+   *
+   * @apiSuccess {JSON} user Newly created user's instance.
+   */
+
   {
     method: 'POST',
     url: '/signup',

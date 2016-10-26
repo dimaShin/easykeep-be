@@ -1,1 +1,1 @@
-{  "name": "node-in-docker",  "version": "1.0.0",  "description": "",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2016-10-25T21:22:01.237Z",    "url": "http://apidocjs.com",    "version": "0.16.1"  }}
+{  "name": "node-in-docker",  "version": "1.0.0",  "description": "",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2016-10-26T10:08:30.322Z",    "url": "http://apidocjs.com",    "version": "0.16.1"  }}
