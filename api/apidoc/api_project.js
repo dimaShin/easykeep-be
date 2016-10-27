@@ -1,1 +1,1 @@
-define({  "name": "node-in-docker",  "version": "1.0.0",  "description": "",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2016-10-26T21:09:08.367Z",    "url": "http://apidocjs.com",    "version": "0.16.1"  }});
+define({  "name": "Easy Keep API documentation",  "version": "0.1.0",  "description": "",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2016-10-27T10:00:05.846Z",    "url": "http://apidocjs.com",    "version": "0.16.1"  }});
