@@ -20,6 +20,7 @@ module.exports = [{
    * @apiSampleRequest 127.0.0.1:3000/signin
    *
    * @apiSuccess {string} token Token for access to the API
+   * @apiSuccess {json} user User model
    */
 
   method: 'POST',
