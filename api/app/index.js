@@ -11,7 +11,9 @@ const router = require('./routes');
 const UserService = require('./services/user');
 const queryParser = require('./services/queryParser');
 const fs = require('fs');
-const path = require('path');
+const cors = require('./services/cors');
+
+app.use(cors);
 
 app.config = config;
 
@@ -24,6 +26,8 @@ app.services = services;
 
 app.dbClient = new DbClient(app);
 app.dbClient.sync({ loggin: console.log });
+
+
 
 app.use(bodyParser.urlencoded({ extended: false, force: true }));
 app.use(bodyParser.json());
