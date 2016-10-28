@@ -6,6 +6,7 @@ let jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const salt = '$2a$10$qW2ph2b4phtZCY.FoVlpP.';
 const secret = 'do-not-forget-to-change-this-in-prod';
+const authHeaderKey = 'auth-token';
 
 let actions = {
 
@@ -51,7 +52,7 @@ let actions = {
 
         actions.startSession(model.get('UserId'), req.app.dbClient.db.Session)
           .then(model => {
-            res.header('auth-token', model.get('token'));
+            actions.addAuthHeader(res, model.get('token'));
             req.app.user = {id: model.get('userId')};
             next();
           });
@@ -68,6 +69,10 @@ let actions = {
         req.app.user = model;
         next();
       })
+  },
+
+  addAuthHeader: (res, token) => {
+    res.header(authHeaderKey, token);
   }
 };
 

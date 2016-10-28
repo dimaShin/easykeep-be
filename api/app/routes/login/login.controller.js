@@ -45,10 +45,11 @@ module.exports = [{
 
         if (hashed === password) {
           req.app.services.auth.startSession(user.get('id'), Session)
-            .then(session => res.send({
-              token: session.get('token'),
-              user: user
-            }))
+            .then(session => {
+              const token = session.get('token');
+              req.app.services.auth.addAuthHeader(res, token);
+              res.send({ token, user });
+            })
         } else {
           res.sendStatus(401);
         }
