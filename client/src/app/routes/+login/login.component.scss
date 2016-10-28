@@ -1,0 +1,36 @@
+.login-content{
+}
+.login-content-left{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+.login-content-right{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+}
+.login-content-img-bg{
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  max-width: none;
+  z-index: -999999;
+  left: auto;
+  top: 0px;
+}
+.right-login-form{
+  width: 50%;
+  position: absolute;
+  margin-top: 50%;
+  margin-left: 50%;
+  transform: translate(-50%, -50%);
+}
+
