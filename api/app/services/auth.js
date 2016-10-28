@@ -60,6 +60,30 @@ let actions = {
       });
   },
 
+  verifyToken: (token, app) => {
+    return new Promise((resolve, reject) => {
+      try {
+        let verified = token && jwt.verify(token, secret);
+        app.dbClient.db.Session.findById(verified.id)
+          .then(session => {
+            if (!session) {
+              reject();
+            }
+
+            if (session.get('token') === token && session.get('active')) {
+              resolve();
+            } else {
+              reject();
+            }
+          })
+      } catch (err) {
+        reject();
+      }
+
+    });
+
+  },
+
   populateUser: (req, res, next) => {
     let userId = req.app.user.id;
     let User = req.app.dbClient.db.User;

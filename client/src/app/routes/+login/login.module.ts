@@ -8,7 +8,6 @@ import { LoginComponent } from './login.component';
 import {RouterModule, Routes} from "@angular/router";
 import {routesConfig} from "./login.routes";
 import {CommonModule} from "@angular/common";
-import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import {HttpModule} from "@angular/http";
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routesConfig),
-    CommonModule,
-    HttpModule
+    CommonModule
   ],
   providers: []
 })
