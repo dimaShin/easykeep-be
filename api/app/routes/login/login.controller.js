@@ -37,14 +37,12 @@ module.exports = [{
     app.services.auth.verifyPassword(app, body)
       .then(user => {
         return app.services.auth.startSession(user.get('id'), Session).
-          then(session => { return { session ,user } });
-      }).then(payload => {
+          then(session => { return { session, user } });
 
-      res.send({
-        user: payload.user,
+      }).then(payload => res.send({
+        user: payload.user.getPublicData(),
         token: payload.session.get('token')
-      })
-    }).catch(() => res.sendStatus(401));
+      })).catch(() => res.sendStatus(401));
 
   }],
 
