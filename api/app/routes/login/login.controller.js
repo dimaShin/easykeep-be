@@ -39,10 +39,11 @@ module.exports = [{
         return app.services.auth.startSession(user.get('id'), Session).
           then(session => { return { session, user } });
 
-      }).then(payload => res.send({
-        user: payload.user.getPublicData(),
-        token: payload.session.get('token')
-      })).catch(() => res.sendStatus(401));
+      }).then(payload => {
+        let token = payload.session.get('token');
+        app.services.auth.addAuthHeader(res, token);
+        res.send({token, user: payload.user});
+      }).catch(() => res.sendStatus(401));
 
   }],
 

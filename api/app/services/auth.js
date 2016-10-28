@@ -72,6 +72,7 @@ let actions = {
   },
 
   addAuthHeader: (res, token) => {
+    console.log('adding auth header: ', token);
     res.header(authHeaderKey, token);
   },
 

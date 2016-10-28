@@ -18,11 +18,15 @@ export class LoginComponent {
   }
 
   login() {
-    this._http.post('http://127.0.0.1:3000/signin', {
+    this.api.post('http://127.0.0.1:3000/signin', {
       name: 'dima',
       password: '123456'
-    }, { withCredentials: true }).subscribe(response => {
-      console.log(response)
-    }, err => { console.log(err)});
+    }, { withCredentials: true })
+      .subscribe(
+        response => {
+          console.log(response)
+        },
+        err => { console.log(err)}
+      );
   }
 }

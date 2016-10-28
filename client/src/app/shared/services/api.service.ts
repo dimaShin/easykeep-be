@@ -6,7 +6,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ApiService  {
-
+  
+  private tokenKey: string = 'auth-token';
   private _token: string = '';
 
   constructor(private _http: Http) { }
@@ -15,8 +16,8 @@ export class ApiService  {
     return this.intercept(this._http.get(url, this.extendOptions(options)));
   }
 
-  post(url, options?: RequestOptionsArgs) {
-    return this.intercept(this._http.post(url, this.extendOptions(options)));
+  post(url, data, options?: RequestOptionsArgs) {
+    return this.intercept(this._http.post(url, data, this.extendOptions(options)));
   }
 
   extendOptions (options?: RequestOptionsArgs) {
@@ -27,28 +28,25 @@ export class ApiService  {
       options.headers = new Headers();
     }
     options.withCredentials = true;
-    options.headers.append('auth-token', this.token);
+    options.headers.append(this.tokenKey, this.token);
     return options;
   }
 
   intercept(observable: Observable<Response>): Observable<Response> {
     return observable.map((response: Response) => {
-      let payload = response.json();
-      let headers = payload.headers;
-
-      this.token = headers.get('auth-token');
-
-      return payload;
+      this.token = response.headers.get(this.tokenKey);
+      return response.json();
     });
 
   }
 
   get token() {
-    return this._token || window.localStorage.getItem('auth-token');
+    return this._token || window.localStorage.getItem(this.tokenKey);
   }
 
   set token (token: string) {
+    console.log('setting token: ', token);
     this._token = token;
-    window.localStorage.setItem('auth-token', token);
+    window.localStorage.setItem(this.tokenKey, token);
   }
 }
