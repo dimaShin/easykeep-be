@@ -73,6 +73,35 @@ let actions = {
 
   addAuthHeader: (res, token) => {
     res.header(authHeaderKey, token);
+  },
+
+  verifyPassword: (app, body) => {
+    const User = app.dbClient.db.User;
+
+    return new Promise((resolve, reject) => {
+      if (!body.name || !body.password) {
+        reject();
+      }
+
+      User.find({name: body.name})
+        .then(user => {
+          if (!user) {
+            reject();
+          }
+
+          let password = user.get('password');
+          let hashed = app.services.auth.hash(body.password);
+
+          if (hashed === password) {
+            resolve(user);
+          } else {
+            reject();
+          }
+        })
+    })
+
+
+
   }
 };
 
