@@ -60,6 +60,30 @@ let actions = {
       });
   },
 
+  verifyToken: (token, app) => {
+    return new Promise((resolve, reject) => {
+      try {
+        let verified = token && jwt.verify(token, secret);
+        app.dbClient.db.Session.findById(verified.id)
+          .then(session => {
+            if (!session) {
+              reject();
+            }
+
+            if (session.get('token') === token && session.get('active')) {
+              resolve();
+            } else {
+              reject();
+            }
+          })
+      } catch (err) {
+        reject();
+      }
+
+    });
+
+  },
+
   populateUser: (req, res, next) => {
     let userId = req.app.user.id;
     let User = req.app.dbClient.db.User;
@@ -72,7 +96,37 @@ let actions = {
   },
 
   addAuthHeader: (res, token) => {
+    console.log('adding auth header: ', token);
     res.header(authHeaderKey, token);
+  },
+
+  verifyPassword: (app, body) => {
+    const User = app.dbClient.db.User;
+
+    return new Promise((resolve, reject) => {
+      if (!body.name || !body.password) {
+        reject();
+      }
+
+      User.find({name: body.name})
+        .then(user => {
+          if (!user) {
+            reject();
+          }
+
+          let password = user.get('password');
+          let hashed = app.services.auth.hash(body.password);
+
+          if (hashed === password) {
+            resolve(user);
+          } else {
+            reject();
+          }
+        })
+    })
+
+
+
   }
 };
 

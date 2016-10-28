@@ -28,34 +28,25 @@ module.exports = [{
   handlers: [(req, res)=> {
     const app = req.app;
     const body = req.body;
-    const User = app.dbClient.db.User;
     const Session = app.dbClient.db.Session;
 
     if (!body.name || !body.password) {
       return res.sendStatus(401);
     }
 
-    User.find({name: body.name})
+    app.services.auth.verifyPassword(app, body)
       .then(user => {
-        if (!user) {
-          return res.sendStatus(401);
-        }
+        return app.services.auth.startSession(user.get('id'), Session).
+          then(session => { return { session, user } });
 
-        let password = user.get('password');
-        let hashed = req.app.services.auth.hash(body.password);
+      }).then(payload => {
+        let token = payload.session.get('token');
+        app.services.auth.addAuthHeader(res, token);
+        res.send({token, user: payload.user});
+      }).catch(() => res.sendStatus(401));
 
-        if (hashed === password) {
-          req.app.services.auth.startSession(user.get('id'), Session)
-            .then(session => {
-              const token = session.get('token');
-              req.app.services.auth.addAuthHeader(res, token);
-              res.send({ token, user });
-            })
-        } else {
-          res.sendStatus(401);
-        }
-      })
-    }],
+  }],
+
   },
 
   /**
@@ -90,5 +81,35 @@ module.exports = [{
           res.send(err);
         });
     }]
-  }
+  },
+
+  /**
+   * @api {post} /token Verify token
+   *
+   * @apiDescription This route for checking token validity
+   * All params must be in request body.
+   *
+   * @apiName Token
+   * @apiGroup Auth
+   *
+   * @apiParam {sting} token Token
+   *
+   * @apiSampleRequest 127.0.0.1:3000/signup
+   *
+   * @apiSuccess {boolean} isValid result of checking.
+   */
+
+  {
+    method: 'POST',
+    url: '/token',
+    handlers: [(req, res)=> {
+      let data = req.body;
+
+      req.app.services.auth.addAuthHeader(res, data.token);
+      req.app.services.auth.verifyToken(data.token, req.app)
+        .then(() => res.send({isValid: true}))
+        .catch(() => res.send({isValid: false}));
+    }]
+  },
+
 ];

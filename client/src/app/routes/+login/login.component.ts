@@ -4,6 +4,7 @@
 import { Component } from '@angular/core';
 import {Http} from "@angular/http";
 import {ApiService} from "../../shared/services/api.service";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -11,18 +12,15 @@ import {ApiService} from "../../shared/services/api.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor (private api: ApiService, private _http: Http) {}
-
-  ngInit() {
-
-  }
+  constructor (private auth: AuthService) {}
 
   login() {
-    this._http.post('http://127.0.0.1:3000/signin', {
+    this.auth.login({
       name: 'dima',
       password: '123456'
-    }, { withCredentials: true }).subscribe(response => {
-      console.log(response)
-    }, err => { console.log(err)});
+    }).subscribe(
+        response => console.log(response),
+        err => console.log(err)
+      );
   }
 }

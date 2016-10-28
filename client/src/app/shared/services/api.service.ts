@@ -2,21 +2,28 @@ import {Injectable} from "@angular/core";
 import {Http, RequestOptionsArgs, RequestOptions, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+import {Router} from "@angular/router";
 
 
 @Injectable()
 export class ApiService  {
-
+  
+  private tokenKey: string = 'auth-token';
   private _token: string = '';
+  private baseUrl: string = 'http://127.0.0.1:3000';
 
-  constructor(private _http: Http) { }
+  constructor(
+    private _http: Http,
+    private router: Router
+  ) { }
 
-  get(url, options?: RequestOptionsArgs) {
-    return this.intercept(this._http.get(url, this.extendOptions(options)));
+  get(url: string, query, options?: RequestOptionsArgs) {
+    return this.intercept(this._http.get(this.baseUrl + url + JSON.stringify(query), this.extendOptions(options)));
   }
 
-  post(url, options?: RequestOptionsArgs) {
-    return this.intercept(this._http.post(url, this.extendOptions(options)));
+  post(url, data, options?: RequestOptionsArgs) {
+    return this.intercept(this._http.post(this.baseUrl + url, data, this.extendOptions(options)));
   }
 
   extendOptions (options?: RequestOptionsArgs) {
@@ -27,28 +34,28 @@ export class ApiService  {
       options.headers = new Headers();
     }
     options.withCredentials = true;
-    options.headers.append('auth-token', this.token);
+    options.headers.append(this.tokenKey, this.token);
     return options;
   }
 
-  intercept(observable: Observable<Response>): Observable<Response> {
+  intercept(observable: Observable<Response>): Observable<any> {
     return observable.map((response: Response) => {
-      let payload = response.json();
-      let headers = payload.headers;
-
-      this.token = headers.get('auth-token');
-
-      return payload;
+      if (response.status === 401) {
+        this.router.navigateByUrl('/login');
+      }
+      this.token = response.headers.get(this.tokenKey);
+      return response.json();
     });
 
   }
 
   get token() {
-    return this._token || window.localStorage.getItem('auth-token');
+    return this._token || window.localStorage.getItem(this.tokenKey);
   }
 
   set token (token: string) {
+    console.log('setting token: ', token);
     this._token = token;
-    window.localStorage.setItem('auth-token', token);
+    window.localStorage.setItem(this.tokenKey, token);
   }
 }
