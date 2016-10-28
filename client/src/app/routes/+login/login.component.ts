@@ -3,6 +3,7 @@
  */
 import { Component } from '@angular/core';
 import {Http} from "@angular/http";
+import {ApiService} from "../../shared/services/api.service";
 
 @Component({
   selector: 'app-login',
@@ -10,5 +11,18 @@ import {Http} from "@angular/http";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor (private http: Http) {}
+  constructor (private api: ApiService, private _http: Http) {}
+
+  ngInit() {
+
+  }
+
+  login() {
+    this._http.post('http://127.0.0.1:3000/signin', {
+      name: 'dima',
+      password: '123456'
+    }, { withCredentials: true }).subscribe(response => {
+      console.log(response)
+    }, err => { console.log(err)});
+  }
 }

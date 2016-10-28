@@ -35,18 +35,19 @@ module.exports = [{
     }
 
     User.find({name: body.name})
-      .then(model => {
-        if (!model) {
+      .then(user => {
+        if (!user) {
           return res.sendStatus(401);
         }
 
-        let password = model.get('password');
+        let password = user.get('password');
         let hashed = req.app.services.auth.hash(body.password);
 
         if (hashed === password) {
-          req.app.services.auth.startSession(model.get('id'), Session)
+          req.app.services.auth.startSession(user.get('id'), Session)
             .then(session => res.send({
-              token: session.get('token')
+              token: session.get('token'),
+              user: user
             }))
         } else {
           res.sendStatus(401);

@@ -1,19 +1,22 @@
 import {Injectable} from "@angular/core";
-import {Http, RequestOptions, Headers, Response, ConnectionBackend, RequestOptionsArgs} from "@angular/http";
+import {Http, RequestOptionsArgs, RequestOptions, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs";
+import 'rxjs/add/operator/map';
 
 
 @Injectable()
-export class ApiService extends Http {
+export class ApiService  {
 
   private _token: string = '';
 
-  constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
-    super(backend, defaultOptions);
-  }
+  constructor(private _http: Http) { }
 
   get(url, options?: RequestOptionsArgs) {
-    return this.intercept(super.get(url, this.extendOptions(options)));
+    return this.intercept(this._http.get(url, this.extendOptions(options)));
+  }
+
+  post(url, options?: RequestOptionsArgs) {
+    return this.intercept(this._http.post(url, this.extendOptions(options)));
   }
 
   extendOptions (options?: RequestOptionsArgs) {
@@ -23,6 +26,7 @@ export class ApiService extends Http {
     if (options.headers == null) {
       options.headers = new Headers();
     }
+    options.withCredentials = true;
     options.headers.append('auth-token', this.token);
     return options;
   }

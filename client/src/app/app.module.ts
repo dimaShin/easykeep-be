@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import {RouterModule} from "@angular/router";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import {RouterModule} from "@angular/router";
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    SharedModule,
     RouterModule.forRoot([
       {
         path: 'dashboard',
