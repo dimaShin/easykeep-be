@@ -4,12 +4,17 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Model = sequelize.define("Product", {
-    name: { type: DataTypes.STRING, unique: true }
+    name: { type: DataTypes.STRING, unique: true, allowNull: false }
   }, {
     classMethods: {
       associate: function(models) {
-        Model.belongsToMany(models.Category, {through: models.ProductsCategories});
-        Model.belongsTo(models.Measure);
+        Model.belongsToMany(models.Category, {
+          through: models.ProductsCategories,
+          as: 'categories'
+        });
+        Model.belongsTo(models.Measure, {
+          as: 'measure'
+        });
       }
     }
   });
