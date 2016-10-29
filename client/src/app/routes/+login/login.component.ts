@@ -20,7 +20,7 @@ export class LoginComponent {
 
   login() {
     this.auth.login({
-      name: 'dima',
+      email: 'dima@mail.com',
       password: '123456'
     }).subscribe(
         payload => {

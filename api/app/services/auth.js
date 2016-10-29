@@ -104,11 +104,11 @@ let actions = {
     const User = app.dbClient.db.User;
 
     return new Promise((resolve, reject) => {
-      if (!body.name || !body.password) {
+      if (!body.email || !body.password) {
         reject();
       }
 
-      User.find({name: body.name})
+      User.find({email: body.email})
         .then(user => {
           if (!user) {
             reject();

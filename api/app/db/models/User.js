@@ -2,12 +2,17 @@
  * Created by iashindmytro on 10/23/16.
  */
 
-let publicKeys = ['name', 'createdAt', 'updatedAt', 'id'];
+let publicKeys = ['name', 'createdAt', 'updatedAt', 'id', 'email'];
 
 module.exports = function(sequelize, DataTypes, app) {
   var User = sequelize.define("User", {
     name:  {
       type     : DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    email: {
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },

@@ -14,7 +14,7 @@ module.exports = [{
    * @apiName Sign In
    * @apiGroup Auth
    *
-   * @apiParam {sting} name User's name
+   * @apiParam {sting} email User's email
    * @apiParam {string} password User's password
    *
    * @apiSampleRequest 127.0.0.1:3000/signin
@@ -30,7 +30,7 @@ module.exports = [{
     const body = req.body;
     const Session = app.dbClient.db.Session;
 
-    if (!body.name || !body.password) {
+    if (!body.email || !body.password) {
       return res.sendStatus(401);
     }
 
@@ -77,7 +77,7 @@ module.exports = [{
       let data = req.body;
 
       req.app.services.user.create(data)
-        .then(user => res.send(user.toJSON()))
+        .then(user => res.send(user.getPublicData()))
         .catch(err => {
           res.status(400);
           res.send(err);
