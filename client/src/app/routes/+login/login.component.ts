@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import {Http} from "@angular/http";
 import {ApiService} from "../../shared/services/api.service";
 import {AuthService} from "../../shared/services/auth.service";
+import {UserService} from "../../shared/services/user/user.service";
 
 @Component({
   selector: 'app-login',
@@ -12,15 +13,20 @@ import {AuthService} from "../../shared/services/auth.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor (private auth: AuthService) {}
+  constructor (
+    private auth: AuthService,
+    private userService: UserService
+  ) {}
 
   login() {
     this.auth.login({
       name: 'dima',
       password: '123456'
     }).subscribe(
-        response => console.log(response),
-        err => console.log(err)
+        payload => {
+          this.userService.systemUser = payload.user;
+          console.log(this.userService.systemUser);
+        }, err => console.log(err)
       );
   }
 }

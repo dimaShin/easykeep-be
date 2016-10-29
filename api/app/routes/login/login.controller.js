@@ -37,9 +37,11 @@ module.exports = [{
     app.services.auth.verifyPassword(app, body)
       .then(user => {
         return app.services.auth.startSession(user.get('id'), Session).
-          then(session => { return { session, user } });
-
-      }).then(payload => {
+          then(session => {
+            return { session, user: user.getPublicData() }
+          });
+      })
+      .then(payload => {
         let token = payload.session.get('token');
         app.services.auth.addAuthHeader(res, token);
         res.send({token, user: payload.user});
@@ -105,7 +107,6 @@ module.exports = [{
     handlers: [(req, res)=> {
       let data = req.body;
 
-      req.app.services.auth.addAuthHeader(res, data.token);
       req.app.services.auth.verifyToken(data.token, req.app)
         .then(() => res.send({isValid: true}))
         .catch(() => res.send({isValid: false}));
