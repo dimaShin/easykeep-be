@@ -4,7 +4,8 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Model = sequelize.define("Measure", {
-    name: { type: DataTypes.STRING, unique: true }
+    name: { type: DataTypes.STRING, unique: true },
+    shortname: {type: DataTypes.STRING, unique: true}
   }, {
     classMethods: {}
   });

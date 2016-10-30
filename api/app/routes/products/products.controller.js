@@ -37,6 +37,12 @@ module.exports = [{
    *
    * All data should be in request body
    *
+   * Categories is array of objects like {name: 'drinks'}.
+   * If category with such name not yet created it will be.
+   *
+   * Measure is an object like {name: 'kilograms', shornname: 'kg}
+   * Also if it's not in DB yet, it will be created
+   *
    * @apiName createProducts
    *
    * @apiParam {String} name Product name
