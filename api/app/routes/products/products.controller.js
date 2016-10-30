@@ -22,8 +22,8 @@ module.exports = [{
       Product.findAll({
         where: query,
         include: [
-          {model: models.Category},
-          {model: models.Measure}
+          {model: models.Category, as: 'categories'},
+          {model: models.Measure, as: 'measure'}
         ]
       })
         .then(products => res.send(products))
@@ -58,13 +58,9 @@ module.exports = [{
       (req, res) => {
         let data = req.body;
 
-        console.log('got new product: ', data);
-
         req.app.services.product.create(data)
-          .then(product => {
-            console.log(product);
-            res.send(product);
-          }).catch(err => res.status(400) && res.send(err));
+          .then(product => res.send(product))
+          .catch(err => res.status(400) && res.send(err));
       }
     ]
 
