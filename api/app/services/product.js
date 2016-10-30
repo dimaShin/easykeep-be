@@ -46,7 +46,6 @@ module.exports = class ProductService {
   }
 
   getCategories(categories) {
-    console.log('populating categories: ', categories);
     if (!categories || !categories.length) {
       return;
     }
@@ -54,10 +53,7 @@ module.exports = class ProductService {
       categories.map(
         category => this.models.Category.findOrCreate(
           { where: category, defaults: category }
-        ).spread(category => {
-          console.log('got category: ', category);
-          return category;
-        })
+        ).spread(category => category)
       )
     );
   }
@@ -68,10 +64,7 @@ module.exports = class ProductService {
     }
     return this.models.Measure.findOrCreate(
       {where: measure, defaults: measure}
-    ).spread(measure => {
-      console.log('got measure: ', measure.get({plain: true}));
-      return measure
-    });
+    ).spread(measure => measure);
   }
 
 };
