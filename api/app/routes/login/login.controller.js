@@ -76,7 +76,7 @@ module.exports = [{
     handlers: [(req, res)=> {
       let data = req.body;
 
-      req.app.services.user.create(data)
+      req.app.services.data.user.create(data)
         .then(user => res.send(user.getPublicData()))
         .catch(err => {
           res.status(400);

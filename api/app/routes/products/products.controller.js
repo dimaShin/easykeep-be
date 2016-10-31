@@ -58,7 +58,7 @@ module.exports = [{
       (req, res) => {
         let data = req.body;
 
-        req.app.services.product.create(data)
+        req.app.services.data.product.create(data)
           .then(product => res.send(product))
           .catch(err => res.status(400) && res.send(err));
       }

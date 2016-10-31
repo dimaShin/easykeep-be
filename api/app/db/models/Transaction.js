@@ -15,8 +15,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     classMethods: {
       associate: function(models) {
-        Transaction.hasMany(models.Purchase);
-        Transaction.belongsTo(models.Account);
+        Transaction.hasMany(models.Purchase, {as: 'purchases'});
+        Transaction.belongsTo(models.Account, {as: 'account', foreignKey: 'accountId'});
+        Transaction.belongsTo(models.Marketplace, {as: 'marketplace', foreignKey: 'marketplaceId'});
       }
     }
   });

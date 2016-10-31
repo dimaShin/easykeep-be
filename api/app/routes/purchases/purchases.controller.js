@@ -23,7 +23,7 @@ module.exports = [{
    * @apiParam {FLOAT} [cost] Cost of the purchase
    * @apiParam {FLOAT} [quantity=1] Quantity of the purchase
    *
-   * @apiParam {String} [AccountId] Marketplace of the purchase
+   * @apiParam {String} [AccountId] Account for the purchase
    * @apiParam {String} [marketplace] Marketplace of the purchase
    * @apiParam {String} [product] Marketplace of the purchase
    * @apiParam {Date} [transactionDate=now] Date of the purchase

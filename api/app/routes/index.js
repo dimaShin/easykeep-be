@@ -6,6 +6,7 @@ const login = require('./login');
 const accounts = require('./accounts/accounts.controller');
 const purchases = require('./purchases/purchases.controller.js');
 const products = require('./products/products.controller');
+const transactions = require('./transactions/transactions.controller');
 
 /**
  * @api {get} /api/* Querying rules
@@ -37,5 +38,6 @@ module.exports = app => [
   login,
   accounts,
   purchases,
-  products
+  products,
+  transactions
 ].map(routes => routes.map(route => initRoute(route, app)));

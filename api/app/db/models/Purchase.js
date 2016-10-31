@@ -22,9 +22,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     classMethods: {
       associate: function(models) {
-        Model.belongsTo(models.Product);
-        Model.belongsTo(models.Marketplace);
-        Model.belongsTo(models.Transaction)
+        Model.belongsTo(models.Product, {as: 'product'});
+        Model.belongsTo(models.Transaction);
       }
     }
   });

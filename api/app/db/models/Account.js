@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Account.hasMany(models.Transaction);
+        Account.hasMany(models.Transaction, {foreignKey: 'accountId'});
         Account.belongsToMany(models.User, {through: models.UsersAccounts});
       }
     }

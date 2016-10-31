@@ -8,8 +8,9 @@ const DbClient = require('./db/dbClient');
 const config = require('./config')(process.env);
 const logger = require('./logger');
 const router = require('./routes');
-const UserService = require('./services/user');
-const ProductService = require('./services/product');
+
+const dataServices = require('./services/data');
+
 const queryParser = require('./services/queryParser');
 const fs = require('fs');
 const cors = require('./services/cors');
@@ -23,14 +24,10 @@ app.dbClient.sync({ loggin: console.log });
 
 const services = {
   auth: require('./services/auth'),
-  user: new UserService(app),
-  product: new ProductService(app)
+  data: dataServices(app)
 };
 
 app.services = services;
-
-
-
 
 
 app.use(bodyParser.urlencoded({ extended: false, force: true }));

@@ -51,9 +51,9 @@ let actions = {
         app.config.env === 'production' && model.set('active', false) && model.save();
 
         actions.startSession(model.get('UserId'), req.app.dbClient.db.Session)
-          .then(model => {
-            actions.addAuthHeader(res, model.get('token'));
-            req.app.user = {id: model.get('userId')};
+          .then(session => {
+            actions.addAuthHeader(res, session.get('token'));
+            req.app.user = {id: session.get('UserId')};
             next();
           });
 
