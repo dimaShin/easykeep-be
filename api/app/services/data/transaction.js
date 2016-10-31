@@ -9,6 +9,12 @@ module.exports = class TransactionService {
   }
 
   create(data) {
+    this.app.DbClient.sequelize.transaction(t => {
+      return this.doCreate(data, t);
+    })
+  }
+
+  doCreate(data, t) {
 
     return this.models.Transaction.create({
       transactionDate: data.transactionDate,
@@ -19,20 +25,21 @@ module.exports = class TransactionService {
       })),
       accountId: data.accountId
     }, {
+      transaction: t,
       include: [{ model: this.models.Purchase, as: 'purchases' }]
     }).then(transaction => {
       let relations = [];
       let products = Promise.all(
         transaction.purchases.map(
-          (purchase, index) => this.populateProduct(purchase, data.purchases[index])
+          (purchase, index) => this.populateProduct(purchase, data.purchases[index], t)
         )
       );
-      let marketplace = data.marketplace && this.populateMarketplace(data.marketplace, transaction);
+      let marketplace = data.marketplace && this.populateMarketplace(data.marketplace, transaction, t);
 
       relations.push(products, marketplace);
 
       return Promise.all(relations)
-        .then((payload) => {
+        .then(() => {
           return this.models.Transaction.find({
             where: {id: transaction.get('id')},
             include: [
@@ -46,15 +53,15 @@ module.exports = class TransactionService {
     })
   }
 
-  populateProduct(purchaseModel, purchaseData) {
+  populateProduct(purchaseModel, purchaseData, t) {
     return this.models.Product.findOrCreate(
-      {where: { name: purchaseData.product }, defaults: {name: purchaseData.product}}
+      {where: { name: purchaseData.product }, defaults: {name: purchaseData.product}, transaction: t}
     ).spread(product =>  purchaseModel.setProduct(product));
   }
 
-  populateMarketplace(marketplace, transaction) {
+  populateMarketplace(marketplace, transaction, t) {
     return this.models.Marketplace.findOrCreate(
-      { where: {name: marketplace} }
+      { where: {name: marketplace}, transaction: t }
     ).spread(marketplace => transaction.setMarketplace(marketplace));
   }
 };
