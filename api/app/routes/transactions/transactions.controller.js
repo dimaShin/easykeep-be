@@ -3,6 +3,44 @@
 module.exports = [
 
   /**
+   * @api {get} /api/transaction Get Transactions List
+   *
+   * @apiDescription This route for getting transactions.
+   *
+   * Account, Purchases with Product and Marketplace models will be included in result item
+   *
+   * Query parameters works as usual (see Rules section)
+   *
+   * If no accountId provided default user's account will be used
+   *
+   * @apiName getTransaction
+   *
+   * @apiParam {json} [query] Query for list filtering
+
+   * @apiGroup Transaction
+   */
+  {
+    url: '/api/transactions',
+    method: 'GET',
+    handlers: [
+      (req, res) => {
+        let query = req.query || {};
+
+        if (!query.accountId) {
+          query.accountId = req.user.get('defaultAccount');
+        }
+
+        req.app.services.data.transaction.get(query)
+          .then(transactions => res.send(transactions))
+          .catch(err => {
+            console.log('----------- got error: ', err);
+            res.status(400).end(err);
+          })
+      }
+    ]
+  },
+
+  /**
    * @api {post} /api/transaction Create new Transaction
    *
    * @apiDescription This route for creating transaction.
@@ -43,7 +81,7 @@ module.exports = [
         let data = req.body;
 
         if (!data.accountId) {
-          data.accountId = req.app.user.defaultAccount
+          data.accountId = req.user.defaultAccount
         }
 
         req.app.services.data.transaction.create(data)

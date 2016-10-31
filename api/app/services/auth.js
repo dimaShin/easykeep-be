@@ -53,7 +53,7 @@ let actions = {
         actions.startSession(model.get('UserId'), req.app.dbClient.db.Session)
           .then(session => {
             actions.addAuthHeader(res, session.get('token'));
-            req.app.user = {id: session.get('UserId')};
+            req.user = {id: session.get('UserId')};
             next();
           });
 
@@ -85,12 +85,12 @@ let actions = {
   },
 
   populateUser: (req, res, next) => {
-    let userId = req.app.user.id;
+    let userId = req.user.id;
     let User = req.app.dbClient.db.User;
 
     User.findById(userId)
       .then(model => {
-        req.app.user = model;
+        req.user = model;
         next();
       })
   },

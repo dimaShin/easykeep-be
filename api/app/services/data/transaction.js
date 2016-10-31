@@ -8,6 +8,16 @@ module.exports = class TransactionService {
     this.models = app.dbClient.db;
   }
 
+  get(query) {
+    return this.models.Transaction.findAll({where: query, include: [
+      {model: this.models.Account, as: 'account'},
+      {model: this.models.Purchase, as: 'purchases', include: [
+        {model: this.models.Product, as: 'product'}
+      ]},
+      {model: this.models.Marketplace, as: 'marketplace'},
+    ]})
+  }
+
   create(data) {
     this.app.DbClient.sequelize.transaction(t => {
       return this.doCreate(data, t);
