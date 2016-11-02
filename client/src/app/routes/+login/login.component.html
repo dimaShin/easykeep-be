@@ -1,38 +1,61 @@
-<!-- <button type="button" (click)="login()">Login</button> -->
+<div class="col-md">
+  <div class="backstretch"></div>
+</div>
+<div class="col-md footer">
+  <div class="login-content">
+    <h1>Welcome to EasyKeep</h1>
+    <p> Lorem ipsum dolor sit amet, coectetuer adipiscing elit sed diam nonummy et nibh euismod aliquam erat volutpat. Lorem ipsum dolor sit amet, coectetuer adipiscing. </p>
 
-<div class="login-content">
-  <div class="login-content-left">
-    <img class="login-content-img-bg" src="../../../assets/image/bg1.jpg">
+    <div class="login-form">
+      <div class="row">
+        <div class="col-xs">
+          <md-input placeholder="User"></md-input>
+        </div>
+        <div class="col-xs">
+          <md-input placeholder="Password" type="password"></md-input>
+        </div>
+      </div>
 
-  </div>
-  <div class="login-content-right">
+      <div class="row">
+        <div class="col-sm-4">
+          <md-checkbox [checked]="false" color="primary">Remember me</md-checkbox>
+        </div>
+        <div class="col-sm-8">
+          <div class="forgot-password">
+            <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+          </div>
+          <button md-raised-button color="accent" type="button" (click)="login()">Login</button>
+        </div>
+      </div>
 
-    <div class="right-login-form">
-      <md-toolbar color="primary">
-        <span>Welcome</span>
-      </md-toolbar>
-
-      <p class="login-p-input">
-        <md-input placeholder="User"></md-input>
-      </p>
-
-      <p class="login-p-input">
-        <md-input placeholder="Password"></md-input>
-      </p>
-      <p class="login-p-button" align="right">
-        <button md-raised-button color="accent">Login</button>
-      </p>
     </div>
-
-    <div class="right-login-footer">
-
-    </div>
-
   </div>
 
-
+  <div class="login-footer">
+    <div class="row">
+      <div class="col-xs-5">
+        <ul class="login-social">
+          <li>
+            <i class="fa fa-google" aria-hidden="true"></i>
+          </li>
+          <li>
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-7">
+        <div class="login-copyright text-right">
+          <p>Copyright © EasyKeep 2016</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
+
+
+
+
 
 
 
