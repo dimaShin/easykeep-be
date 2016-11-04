@@ -2,17 +2,15 @@
  * Created by iashindmytro on 10/24/16.
  */
 import { Component } from '@angular/core';
-import {Http} from "@angular/http";
-import {ApiService} from "../../shared/services/api.service";
-import {AuthService} from "../../shared/services/auth.service";
-import {UserService} from "../../shared/services/user/user.service";
+import {AuthService} from "../../../shared/services/auth.service";
+import {UserService} from "../../../shared/services/user/user.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-signup',
+  templateUrl: 'signup.component.html',
+  styleUrls: ['signup.component.scss']
 })
-export class LoginComponent {
+export class SignupComponent {
   constructor (
     private auth: AuthService,
     private userService: UserService

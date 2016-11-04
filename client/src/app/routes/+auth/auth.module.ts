@@ -4,27 +4,27 @@
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { LoginComponent } from './login.component';
+import {AuthComponent} from './auth.component';
 import {RouterModule, Routes} from "@angular/router";
-import {routesConfig} from "./login.routes";
+import {routesConfig} from "./auth.routes";
 import {CommonModule} from "@angular/common";
 import { MaterialModule } from '@angular/material';
+import {LoginComponent} from "./login/login.component";
+import {SignupComponent} from "./signup/signup.component";
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    AuthComponent,
+    SignupComponent
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routesConfig),
     CommonModule,
-    MaterialModule.forRoot()
+    MaterialModule.forRoot(),
   ],
   providers: []
 })
-export class LoginModule {
-
-  static routes:Routes = routesConfig;
-
-}
+export class AuthModule { }

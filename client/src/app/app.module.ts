@@ -1,12 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-
+import { MaterialModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import {RouterModule} from "@angular/router";
 import {SharedModule} from "./shared/shared.module";
-import {AuthService} from "./shared/services/auth.service";
 
 @NgModule({
   declarations: [
@@ -16,26 +14,26 @@ import {AuthService} from "./shared/services/auth.service";
     BrowserModule,
     FormsModule,
     SharedModule,
+    MaterialModule.forRoot(),
     RouterModule.forRoot([
       {
         path: 'dashboard',
         pathMatch: 'full',
-        loadChildren: () => new Promise(resolve => (require as any).ensure([], () => resolve(require('./routes/+dashboard/dashboard.module')['DashboardModule']))),
-        canActivate: [AuthService]
+        loadChildren: () => new Promise(resolve => (require as any).ensure([], () => resolve(require('./routes/+dashboard/dashboard.module')['DashboardModule'])))
       },
       {
-        path: 'login',
-        loadChildren: () => new Promise(resolve => (require as any).ensure([], () => resolve(require('./routes/+login/login.module')['LoginModule']))),
+        path: 'auth',
+        loadChildren: 'app/routes/+auth/auth.module#AuthModule',
         pathMatch: 'full'
       },
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
+        redirectTo: 'auth'
       }
     ])
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

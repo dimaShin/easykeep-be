@@ -41,6 +41,12 @@
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@angular/http/-/http-2.1.1.tgz#6cec2c675aa0b8f8e7f809d617e4cde5b713437a"
 
+"@angular/material":
+  version "2.0.0-alpha.9-3"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-2.0.0-alpha.9-3.tgz#77e0f6a790069b2b9d48bff3eab78b5a59d244a0"
+  dependencies:
+    "@types/hammerjs" "^2.0.30"
+
 "@angular/platform-browser-dynamic@~2.1.0":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.1.1.tgz#d1e671abbc35c4c3dab01d266a239ebfb0ef8b6e"
@@ -70,6 +76,10 @@
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.1.2.tgz#a27a77430ad2fbd1dda59de790ce9770e3fd2298"
   dependencies:
     "@angular-cli/ast-tools" "^1.0.0"
+
+"@types/hammerjs@^2.0.30":
+  version "2.0.33"
+  resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.33.tgz#45f57352474181425bb4b65f7313a60426d54bab"
 
 "@types/jasmine@^2.2.30", "@types/jasmine@^2.2.31":
   version "2.5.35"
@@ -2779,6 +2789,10 @@ fireworm@^0.7.0:
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
+
+font-awesome:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
 for-in@^0.1.5:
   version "0.1.6"

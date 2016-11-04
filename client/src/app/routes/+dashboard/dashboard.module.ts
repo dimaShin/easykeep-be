@@ -13,6 +13,7 @@ import {routesConfig} from "./dashboard.routes";
   declarations: [
     DashboardComponent
   ],
+  exports: [DashboardComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
