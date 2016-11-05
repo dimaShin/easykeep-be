@@ -1,31 +1,67 @@
-<div class="col-md">
+<div class="col-md" [@loginState]="'in'">
   <div class="login-content">
     <h1>Welcome to EasyKeep</h1>
     <p> Lorem ipsum dolor sit amet, coectetuer adipiscing elit sed diam nonummy et nibh euismod aliquam erat volutpat. Lorem ipsum dolor sit amet, coectetuer adipiscing. </p>
 
-    <div class="login-form">
+    <form
+       class="login-form"
+       [formGroup]="form"
+       (submit)="login()"
+    >
       <div class="row">
         <div class="col-xs">
-          <md-input placeholder="User"></md-input>
+          <md-input
+                  placeholder="Email"
+                  [formControl]="form.controls?.email"
+                  required
+          ></md-input>
+          <div
+            [@errorState]="'in'"
+            class="invalid-msg"
+            *ngIf="email.invalid && email.dirty"
+          >Please, enter valid email</div>
         </div>
         <div class="col-xs">
-          <md-input placeholder="Password" type="password"></md-input>
+          <md-input
+                  placeholder="Password"
+                  type="password"
+                  [formControl]="form?.controls?.password"
+                  required
+          ></md-input>
+
+          <div
+            [@errorState]="'in'"
+            class="invalid-msg"
+            *ngIf="password.invalid && password.dirty"
+          >Password must be at least 6 characters</div>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-4">
-          <md-checkbox [checked]="false" color="primary">Remember me</md-checkbox>
-        </div>
-        <div class="col-sm-8">
+
+        <div class="col-md">
           <div class="forgot-password">
-            <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+            <a [routerLink]="['signup']">Want new Account?</a>
           </div>
-          <button md-raised-button color="accent" type="button" (click)="login()">Login</button>
+          <div class="forgot-password">
+            <a class="forget-password">Forgot Password?</a>
+          </div>
         </div>
-      </div>
+        <div class="col-md align-right">
+          <button md-raised-button
+                  color="accent"
+                  type="submit"
+                  [disabled]="!form.valid"
+          >Login</button>
+        </div>
+      </div> <!-- end row -->
+      <div
+        class="container invalid-msg align-right"
+        [@authError]="'in'"
+        *ngIf="showAuthError"
+      >Incorrect email or password</div>
 
-    </div>
+    </form>
   </div>
 
   <div class="login-footer">

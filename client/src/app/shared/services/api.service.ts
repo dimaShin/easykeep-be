@@ -43,7 +43,13 @@ export class ApiService  {
       if (response.status === 401) {
         this.router.navigateByUrl('/login');
       }
-      this.token = response.headers.get(this.tokenKey);
+
+      let token: string = response.headers.get(this.tokenKey);
+
+      if (token) {
+        this.token = token;
+      }
+
       return response.json();
     });
 
@@ -54,7 +60,6 @@ export class ApiService  {
   }
 
   set token (token: string) {
-    console.log('setting token: ', token);
     this._token = token;
     window.localStorage.setItem(this.tokenKey, token);
   }

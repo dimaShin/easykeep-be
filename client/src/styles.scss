@@ -3,8 +3,24 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
 
+$error-color: #c33;
+
 body{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.invalid-msg {
+  font-size: .8em;
+  color: $error-color;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.container-fluid {
+  display: inline-block;
+  width: 100%;
 }

@@ -5,6 +5,7 @@ import { MaterialModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import {RouterModule} from "@angular/router";
 import {SharedModule} from "./shared/shared.module";
+import {AuthService} from "./shared/services/auth.service";
 
 @NgModule({
   declarations: [
@@ -18,18 +19,19 @@ import {SharedModule} from "./shared/shared.module";
     RouterModule.forRoot([
       {
         path: 'dashboard',
-        pathMatch: 'full',
-        loadChildren: () => new Promise(resolve => (require as any).ensure([], () => resolve(require('./routes/+dashboard/dashboard.module')['DashboardModule'])))
+        pathMatch: 'prefix',
+        loadChildren: 'app/routes/+dashboard/dashboard.module#DashboardModule',
+        canActivate: [AuthService]
       },
       {
         path: 'auth',
         loadChildren: 'app/routes/+auth/auth.module#AuthModule',
-        pathMatch: 'full'
+        pathMatch: 'prefix'
       },
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'auth'
+        redirectTo: 'dashboard'
       }
     ])
   ],

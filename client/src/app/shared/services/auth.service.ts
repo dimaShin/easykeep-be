@@ -1,14 +1,14 @@
 import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
-import {ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate} from "@angular/router";
+import {ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router} from "@angular/router";
 import {User} from "./user/user.model";
 import {UserService} from "./user/user.service";
 
-interface TokenValidationPayload {
+export interface TokenValidationPayload {
   isValid: boolean;
 }
 
-interface LoginPayload {
+export interface LoginPayload {
   toke: string;
   user: User;
 }
@@ -18,7 +18,8 @@ export class AuthService implements CanActivate {
 
   constructor(
     private api: ApiService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   login(data) {
@@ -34,7 +35,14 @@ export class AuthService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) {
-    return this.verifyToken(this.api.token);
+    return this.verifyToken(this.api.token)
+      .then(isValid => {
+        if (isValid) {
+          return true;
+        }
+        this.router.navigate(['/auth']);
+        return false;
+      });
   }
 
   verifyToken(token: string) {

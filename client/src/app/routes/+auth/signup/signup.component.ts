@@ -4,11 +4,13 @@
 import { Component } from '@angular/core';
 import {AuthService} from "../../../shared/services/auth.service";
 import {UserService} from "../../../shared/services/user/user.service";
+import {slideLeftAnimation} from "../../../shared/animations/slide.left";
 
 @Component({
   selector: 'app-signup',
   templateUrl: 'signup.component.html',
-  styleUrls: ['signup.component.scss']
+  styleUrls: ['signup.component.scss'],
+  animations: [slideLeftAnimation('signupState')]
 })
 export class SignupComponent {
   constructor (
