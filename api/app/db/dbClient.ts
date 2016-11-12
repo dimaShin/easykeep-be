@@ -1,11 +1,19 @@
+import sequelize = require("sequelize");
+import Sequelize = sequelize.Sequelize;
+import {Models} from "../types/models";
+
 /**
  * Created by iashindmytro on 10/23/16.
  */
 let fs        = require("fs");
 let path      = require("path");
-let Sequelize = require("sequelize");
 
-module.exports = class DbClient {
+export class DbClient {
+
+  private models: string[];
+  private _sequelize: Sequelize;
+
+  public db: Models;
 
   constructor(app) {
     this.models = [
@@ -15,9 +23,9 @@ module.exports = class DbClient {
       'Marketplace',
       'Product',
       'Purchase',
+      'PurchasesCategories',
       'Transaction',
       'ProductsCategories',
-      'TransactionsMarketplaces',
       'UsersAccounts',
       'Measure',
       'Session'
@@ -40,7 +48,7 @@ module.exports = class DbClient {
   static createAssociations(db) {
     Object.keys(db).forEach(function(modelName) {
       if ("associate" in db[modelName]) {
-        db[modelName].associate(db);
+        db[modelName].associate(db, db[modelName]);
       }
     });
   }
