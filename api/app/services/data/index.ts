@@ -1,4 +1,5 @@
-let ProductService = require('./product');
+
+import {ProductService} from "./product";
 let UserService = require('./user');
 let PurchaseService = require('./purchase');
 let TransactionService = require('./transaction');

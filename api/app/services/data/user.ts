@@ -1,19 +1,22 @@
 
-module.exports = class UserService {
+import {Application} from "../../types/app";
+import {Instance} from "../../types/Instance";
+export default class UserService {
 
+  app: Application;
 
   constructor(app) {
     this.app = app;
   }
 
-  create(data) {
+  create(data): Promise<Instance> {
     let User = this.app.dbClient.db.User;
 
     return User.create(data)
       .then(user =>  this.assignDefaultAccount(user, data.AccountId, true));
   }
 
-  assignDefaultAccount(user, accountId, asDefault) {
+  assignDefaultAccount(user: Instance, accountId: string, asDefault: boolean): Promise<Instance> {
     let Account = this.app.dbClient.db.Account;
     let userName = user.get('name');
 
@@ -28,7 +31,7 @@ module.exports = class UserService {
         }
 
         return user;
-      })
+      });
 
   }
 };

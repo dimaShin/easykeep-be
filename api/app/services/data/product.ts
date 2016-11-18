@@ -1,6 +1,10 @@
 
 
-module.exports = class ProductService {
+import {Application} from "../../types/app";
+export class ProductService {
+
+  private app: Application;
+  private models;
 
   constructor(app) {
     this.app = app;
@@ -27,7 +31,7 @@ module.exports = class ProductService {
         }
 
         return product.save()
-          .then(model => Object.assign(
+          .then(model => (<any>Object).assign(
             {}, model.get({ plain: true }), {
               categories: categories && categories.map(category => category.get({plain: true})) || [],
               measure: measure && measure.get({plain: true}) || null
@@ -38,7 +42,7 @@ module.exports = class ProductService {
 
   populateAssociations(data) {
 
-    return Promise.all([
+    return (<any>Promise).all([
       this.getCategories(data.categories),
       this.getMeasure(data.measure)
     ]);
@@ -49,7 +53,7 @@ module.exports = class ProductService {
     if (!categories || !categories.length) {
       return;
     }
-    return Promise.all(
+    return (<any>Promise).all(
       categories.map(
         category => this.models.Category.findOrCreate(
           { where: category, defaults: category }
@@ -67,4 +71,4 @@ module.exports = class ProductService {
     ).spread(measure => measure);
   }
 
-};
+}
