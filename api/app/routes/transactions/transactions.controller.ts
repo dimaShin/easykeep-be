@@ -1,6 +1,7 @@
 
-
-module.exports = [
+import {Request} from "../../types/request";
+import {Response} from "../../types/response";
+export default [
 
   /**
    * @api {get} /api/transaction Get Transactions List
@@ -23,7 +24,7 @@ module.exports = [
     url: '/api/transactions',
     method: 'GET',
     handlers: [
-      (req, res) => {
+      (req: Request, res: Response) => {
         let query = req.query || {};
 
         if (!query.accountId) {
@@ -77,7 +78,7 @@ module.exports = [
     url: '/api/transactions',
     method: 'POST',
     handlers: [
-      (req, res) => {
+      (req: Request, res: Response) => {
         let data = req.body;
 
         if (!data.accountId) {

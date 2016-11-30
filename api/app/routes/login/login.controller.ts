@@ -1,8 +1,13 @@
+import {Request, Response} from "express-serve-static-core";
+import {Application} from "../../types/app";
+import Model = sequelize.Model;
+import sequelize = require("sequelize");
+import {Instance} from "../../types/Instance";
 /**
  * Created by iashindmytro on 10/24/16.
  */
 
-module.exports = [{
+export default [{
 
   /**
    * @api {post} /signin Login into the system
@@ -25,8 +30,8 @@ module.exports = [{
 
   method: 'POST',
   url: '/signin',
-  handlers: [(req, res)=> {
-    const app = req.app;
+  handlers: [(req: Request, res: Response)=> {
+    const app: Application = req.app;
     const body = req.body;
     const Session = app.dbClient.db.Session;
 
@@ -35,7 +40,7 @@ module.exports = [{
     }
 
     app.services.auth.verifyPassword(app, body)
-      .then(user => {
+      .then((user: Instance) => {
         return app.services.auth.startSession(user.get('id'), Session).
           then(session => {
             return { session, user: user.getPublicData() }
@@ -75,9 +80,22 @@ module.exports = [{
     url: '/signup',
     handlers: [(req, res)=> {
       let data = req.body;
+      let mailerService = req.app.services.mailer;
+      let authService = req.app.services.auth;
 
       req.app.services.data.user.create(data)
-        .then(user => res.send(user.getPublicData()))
+        .then((user: Instance) => {
+          let token = authService.generateToken({
+            userId: user.get('id')
+          }, '7 days');
+          mailerService.send({
+            to: user.get('email'),
+            subject: 'Confirm Registration',
+            text: `http://localhost:4200/auth/confirm/${token}`,
+            html: `<a href="http://localhost:4200/auth/confirm/${token}">Confirm your email</a>`
+          });
+          res.send(user.getPublicData());
+        })
         .catch(err => {
           res.status(400);
           res.send(err);

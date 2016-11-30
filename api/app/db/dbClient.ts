@@ -1,6 +1,5 @@
-import sequelize = require("sequelize");
-import Sequelize = sequelize.Sequelize;
 import {Models} from "../types/models";
+import { Sequelize } from "sequelize";
 
 /**
  * Created by iashindmytro on 10/23/16.

@@ -3,6 +3,7 @@ import {ApiService} from "./api.service";
 import {ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router} from "@angular/router";
 import {User} from "./user/user.model";
 import {UserService} from "./user/user.service";
+import {Observable} from "rxjs";
 
 export interface TokenValidationPayload {
   isValid: boolean;
@@ -22,7 +23,7 @@ export class AuthService implements CanActivate {
     private router: Router
   ) { }
 
-  login(data) {
+  login(data) : Observable<LoginPayload> {
     return this.api.post('/signin', data)
       .map((payload: LoginPayload) => {
         return Object.assign(payload, {

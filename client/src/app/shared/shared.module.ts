@@ -9,6 +9,7 @@ import {UserService} from "./services/user/user.service";
   imports: [HttpModule],
   providers: [
     ApiService,
+    {provide: ApiService, useClass: ApiService},
     AuthService,
     UserService
   ]

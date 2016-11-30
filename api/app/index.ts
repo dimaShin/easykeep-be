@@ -1,10 +1,11 @@
-/**
- * Created by iashindmytro on 10/23/16.
- */
+import bodyParser = require("body-parser");
+import {DbClient} from "./db/dbClient";
+import {Application} from "./types/app";
+import Express = e.Express;
+import e = require("express");
+
 const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const DbClient = require('./db/dbClient');
+const app: Application = express();
 const Mailer = require('./services/mailer');
 const config = require('./config')(process.env);
 const logger = require('./logger');
@@ -15,7 +16,7 @@ const dataServices = require('./services/data');
 const queryParser = require('./services/queryParser');
 const cors = require('./services/cors');
 
-app.use(cors);
+app['use'](cors);
 
 app.config = config;
 
@@ -33,17 +34,17 @@ services.mailer.verifyConnection();
 app.services = services;
 
 
-app.use(bodyParser.urlencoded({ extended: false, force: true }));
-app.use(bodyParser.json());
+app['use'](bodyParser.urlencoded({ extended: false, force: true }));
+app['use'](bodyParser.json());
 
 logger(app);
 
-app.use('/api/*', services.auth.verifySession);
-app.get('/api/*', queryParser);
-app.use('/api/*', services.auth.populateUser);
+app['use']('/api/*', services.auth.verifySession);
+app['use']('/api/*', queryParser);
+app['use']('/api/*', services.auth.populateUser);
 
 router(app);
 
-app.use(require('./services/errorHandler'));
+app['use'](require('./services/errorHandler'));
 
 module.exports = app;

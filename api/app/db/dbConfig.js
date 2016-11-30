@@ -14,7 +14,7 @@ const config = {
   }
 };
 
-module.exports = function (env) {
+export default (env) => {
   return config['development']
 };
 

@@ -1,6 +1,9 @@
 
 
-module.exports = [{
+import {Request} from "../../types/request";
+import {Response} from "../../types/response";
+import {Application} from "../../types/app";
+export default [{
 
   /**
    * @api {get} /api/products Get products list
@@ -14,8 +17,9 @@ module.exports = [{
   url: '/api/products',
   method: 'get',
   handlers: [
-    (req, res) => {
-      let models = req.app.dbClient.db;
+    (req: Request, res: Response) => {
+      let app: Application = req.app;
+      let models = app.dbClient.db;
       let Product = models.Product;
       let query = req.query.query;
 
@@ -55,7 +59,7 @@ module.exports = [{
     url: '/api/products',
     method: 'post',
     handlers: [
-      (req, res) => {
+      (req: Request, res: Response) => {
         let data = req.body;
 
         req.app.services.data.product.create(data)

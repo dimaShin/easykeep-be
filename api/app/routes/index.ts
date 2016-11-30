@@ -3,7 +3,7 @@
  */
 const users = require('./users');
 const login = require('./login');
-const accounts = require('./accounts/accounts.controller');
+const accounts = require('./accounts/accounts.controller.ts');
 const products = require('./products/products.controller');
 const transactions = require('./transactions/transactions.controller');
 

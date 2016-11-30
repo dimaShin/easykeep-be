@@ -1,13 +1,14 @@
-/**
- * Created by iashindmytro on 10/25/16.
- */
+import Request = e.Request;
+import Response = e.Response;
+import e = require("express");
+import {Application} from "../../types/app";
 
-module.exports = [{
+export default [{
   url: '/api/accounts',
   method: 'POST',
   handlers: [
-    (req, res) => {
-      let app = req.app;
+    (req: Request, res: Response) => {
+      let app: Application = req.app;
       let Account = app.dbClient.db.Account;
       let data = req.body;
 
