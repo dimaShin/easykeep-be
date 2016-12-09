@@ -28,11 +28,24 @@ module.exports = class UserService {
   createSession(userId) {
     return this.services.db.models.Sessions.create({
       UserId: userId,
-      token: this.createToken(userId)
+      token: UserService.createToken(userId)
     })
   }
 
-  createToken(userId) {
+  static createToken(userId) {
     return jwt.sign({userId: userId}, jwtSecret);
+  }
+
+  getMySession(token) {
+    let decodedToken = jwt.verify(token, jwtSecret);
+
+    if (!decodedToken) {
+      throw 'Invalid token';
+    }
+
+    return this.services.db.models.Sessions.findOne({
+      where: { token },
+      include: [ this.services.db.models.Users ]
+    });
   }
 };

@@ -20,8 +20,11 @@ module.exports = {
                 name: me.name
               }
           });
+
           let session = await app.services.users.getSession(fbAccount.get('UserId'));
-          res.send(session.get('token'));
+
+          res.send({ token: session.get('token') });
+
         } catch (err) {
           console.log('catch error >>> ', err);
           res.status(400).send(err);

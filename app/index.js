@@ -20,7 +20,7 @@ app.services = Object.assign(services, {
 });
 
 
-app.use(cors());
+app.use(cors({allowedHeaders: ['authToken, content-type']}));
 app.use(bodyParser.json());
 
 app.use(router);
