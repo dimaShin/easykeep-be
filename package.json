@@ -10,8 +10,9 @@
   "dependencies": {
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
     "express": "^4.14.0",
-    "express-cors": "^v0.0.3",
+    "fb": "^1.1.1",
     "jsonwebtoken": "^7.1.9",
     "nodemailer": "^2.6.4",
     "nodemailer-wellknown": "^0.2.0",
