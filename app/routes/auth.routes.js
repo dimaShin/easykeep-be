@@ -17,7 +17,8 @@ module.exports = {
             {
               fbUserId: me.id,
               User: {
-                name: me.name
+                name: me.name,
+                email: me.email
               }
           });
 

@@ -2,11 +2,10 @@ let fb = require('fb');
 
 module.exports = class FacebookService {
 
-  getMe(accessToken) {
-    fb.setAccessToken(accessToken);
+  getMe(access_token) {
 
     return new Promise((resolve, reject) => {
-      fb.api('me', (payload) => {
+      fb.api('me', { fields: ['email', 'name'], access_token },  (payload) => {
         if (!payload || payload.error) {
           reject(payload && payload.error || payload);
           return;
@@ -16,4 +15,4 @@ module.exports = class FacebookService {
     });
   }
 
-}
+};

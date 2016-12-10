@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('ACTIVE', 'DISABLE', 'DELETED'),
       allowNull: false,
       defaultValue: 'DISABLE'
+    },
+    email: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     classMethods: {
