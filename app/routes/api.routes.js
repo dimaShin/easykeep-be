@@ -41,6 +41,23 @@ module.exports = {
 
         res.send(req.user);
       }]
+    },
+
+    {
+      path: '/invoice',
+      method: 'POST',
+      handlers: [async (req, res) => {
+        let body = req.body;
+        let app = req.app;
+
+        try {
+          let invoice = await app.services.invoice.createInvoice(body);
+          res.status(200).send(invoice);
+        } catch (err) {
+          console.log(err);
+          res.status(400).send(err);
+        }
+      }]
     }
   ]
 };

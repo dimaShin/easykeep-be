@@ -5,7 +5,11 @@ let path      = require("path");
 let models = [
   'Users',
   'Sessions',
-  'FacebookAccounts'
+  'FacebookAccounts',
+  'Invoices',
+  'InvoicesProducts',
+  'Products',
+  'Tags'
 ];
 
 let connectionConfig = {
@@ -37,7 +41,7 @@ module.exports = class DbClient {
 
     Object.assign(this, {Sequelize});
 
-    this.sync({ force: true });
+    this.sync({ force: false });
   }
 
   static createModel(db, model) {
@@ -57,4 +61,8 @@ module.exports = class DbClient {
     this._sequelize.sync(options);
   }
 
-}
+  startTransaction() {
+    return this._sequelize.transaction();
+  }
+
+};

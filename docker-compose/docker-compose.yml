@@ -48,7 +48,7 @@ services:
           - PGDATA=/var/lib/pgdata
           - DATABASE_URL=postgres://username:pgpassword@db:5432
       volumes:
-          - ./../pgdata:/var/lib/pgdata
+          - ./../volumes:/var/lib
       ports:
           - "5432:5432"
       expose:
